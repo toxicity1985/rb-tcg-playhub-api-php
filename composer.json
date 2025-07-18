@@ -1,0 +1,25 @@
+{
+    "name": "toxicity/rb-tcg-playhub-api",
+    "type": "library",
+    "description": "Eases the api usage from the tcg.ravensburgerplay.com website.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Playhub\\": "lib/playhub"
+        }
+    },
+    "authors": [
+        {
+            "name": "John Quairia",
+            "email": "tech@toxicity.be"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.2",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "symfony/http-client": "^7.3",
+        "symfony/validator": "^7.3"
+    }
+}
