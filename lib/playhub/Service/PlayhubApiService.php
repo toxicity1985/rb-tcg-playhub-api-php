@@ -80,4 +80,17 @@ readonly class PlayhubApiService
 
         return $events;
     }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getEventRound(int $id)
+    {
+        $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches' );
+        return $response->toArray();
+    }
 }
