@@ -68,7 +68,7 @@ readonly class PlayhubApiService
         $events = [];
 
         while ($page !== null) {
-            $response = $this->playHubClient->request('GET', '/events/'.$id . '/registrations?page=' . $page);
+            $response = $this->playHubClient->request('GET', '/events/'.$id . '/registrations?include_deaths=true&page=' . $page);
             $content = $response->toArray();
 
             $page = $content['next'];
