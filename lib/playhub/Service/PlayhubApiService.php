@@ -68,7 +68,7 @@ readonly class PlayhubApiService
         $events = [];
 
         while ($page !== null) {
-            $response = $this->playHubClient->request('GET', '/events/'.$id . '/registrations?include_deaths=true&page=' . $page);
+            $response = $this->playHubClient->request('GET', '/events/'.$id . '/registrations?page_size=500&include_deaths=true&page=' . $page);
             $content = $response->toArray();
 
             $page = $content['next'];
@@ -90,7 +90,24 @@ readonly class PlayhubApiService
      */
     public function getEventRound(int $id)
     {
-        $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches' );
-        return $response->toArray();
+        $page = 1;
+        $events = [];
+
+        while ($page !== null) {
+            $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches/paginated?page_size=500&page=' . $page);
+            $content = $response->toArray();
+
+            $page = $content['next'];
+
+            if (count($content['results']) > 0) {
+                $events = array_merge($events, $content['results']);
+            }
+        }
+
+        return ['matches' => $events];
+
+
+        //$response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches' );
+        //return $response->toArray();
     }
 }
