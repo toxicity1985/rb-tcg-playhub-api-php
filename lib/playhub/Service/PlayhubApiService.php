@@ -91,7 +91,7 @@ readonly class PlayhubApiService
     public function getEventRound(int $id)
     {
         $page = 1;
-        $events = [];
+        $matches = [];
 
         while ($page !== null) {
             $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches/paginated?page_size=500&page=' . $page);
@@ -100,14 +100,37 @@ readonly class PlayhubApiService
             $page = $content['next'];
 
             if (count($content['results']) > 0) {
-                $events = array_merge($events, $content['results']);
+                $matches = array_merge($matches, $content['results']);
             }
         }
 
-        return ['matches' => $events];
+        return ['matches' => $matches];
+    }
 
 
-        //$response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/matches' );
-        //return $response->toArray();
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getStandings(int $id)
+    {
+        $page = 1;
+        $standings = [];
+
+        while ($page !== null) {
+            $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/standinsg/paginated?page_size=250&page=' . $page);
+            $content = $response->toArray();
+
+            $page = $content['next'];
+
+            if (count($content['results']) > 0) {
+                $standings = array_merge($standings, $content['results']);
+            }
+        }
+
+        return ['standings' => $standings];
     }
 }
