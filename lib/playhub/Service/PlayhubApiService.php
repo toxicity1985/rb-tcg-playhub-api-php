@@ -121,7 +121,7 @@ readonly class PlayhubApiService
         $standings = [];
 
         while ($page !== null) {
-            $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/standinsg/paginated?page_size=250&page=' . $page);
+            $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/standings/paginated?page_size=250&page=' . $page);
             $content = $response->toArray();
 
             $page = $content['next'];
