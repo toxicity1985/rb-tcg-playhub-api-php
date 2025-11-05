@@ -62,7 +62,7 @@ readonly class PlayhubApiService
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getEventRegistrations(int $id)
+    public function getEventRegistrations(int $id): array
     {
         $page = 1;
         $events = [];
@@ -88,7 +88,7 @@ readonly class PlayhubApiService
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getEventRound(int $id)
+    public function getEventRound(int $id): array
     {
         $page = 1;
         $matches = [];
@@ -115,7 +115,7 @@ readonly class PlayhubApiService
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getStandings(int $id)
+    public function getStandings(int $id): array
     {
         $page = 1;
         $standings = [];
@@ -132,5 +132,22 @@ readonly class PlayhubApiService
         }
 
         return ['standings' => $standings];
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     *
+     * For the old event, for the moment, we have to use that function because we got empty results from the paginated route
+     */
+    public function getOldStandings(int $id): array
+    {
+        $response = $this->playHubClient->request('GET', '/tournament-rounds/' . $id . '/standings');
+        $content = $response->toArray();
+
+        return $content;
     }
 }

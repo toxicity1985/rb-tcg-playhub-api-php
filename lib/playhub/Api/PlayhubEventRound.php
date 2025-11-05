@@ -36,4 +36,16 @@ class PlayhubEventRound extends AbstractPlayhubApi
     {
         return self::build()->getStandings($id);
     }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public static function getOldStandings(int $id): array
+    {
+        return self::build()->getOldStandings($id);
+    }
 }
