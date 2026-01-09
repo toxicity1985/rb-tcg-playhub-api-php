@@ -10,10 +10,17 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class PlayhubClient
 {
     private HttpClientInterface $client;
+    private string $baseUrl;
 
-    public function __construct()
+    public function __construct(bool $useProxy = true)
     {
         $this->client = HttpClient::create();
+        
+        if ($useProxy) {
+            $this->baseUrl = 'https://api.cloudflare.ravensburgerplay.com/hydraproxy/api/v2';
+        } else {
+            $this->baseUrl = 'https://api.ravensburgerplay.com/api/v2';
+        }
     }
 
     /**
@@ -21,6 +28,7 @@ class PlayhubClient
      */
     public function request(string $method, string $url, array $options = []): ResponseInterface
     {
-        return $this->client->request($method, 'https://api.ravensburgerplay.com/api/v2' . $url, $options);
+        $fullUrl = $this->baseUrl . $url;
+        return $this->client->request($method, $fullUrl, $options);
     }
 }
