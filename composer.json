@@ -19,7 +19,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "symfony/http-client": "^7.3",
-        "symfony/validator": "^7.3"
+        "symfony/http-client": "^7.3 || ^8.0",
+        "symfony/validator": "^7.3 || ^8.0"
     }
 }
